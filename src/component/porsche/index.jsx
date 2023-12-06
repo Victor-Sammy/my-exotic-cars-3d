@@ -40,8 +40,7 @@ export default function Porsche({
   useFrame((state) => {
     if (OrbitControlsRef.current) {
       const { x, y } = state.pointer
-      //console.log(-x * angleToRadians(90))
-      //console.log(y * angleToRadians(90 - 30))
+
       OrbitControlsRef.current.setAzimuthalAngle(-x * angleToRadians(45))
       OrbitControlsRef.current.setPolarAngle((y + 1) * angleToRadians(90 - 30))
       OrbitControlsRef.current.update()
@@ -55,7 +54,6 @@ export default function Porsche({
       <PerspectiveCamera makeDefault position={[0, 0, 5]} />
       <OrbitControls
         ref={OrbitControlsRef}
-        //enableZoom={true}
         minPolarAngle={angleToRadians(75)}
         maxPolarAngle={angleToRadians(80)}
       />

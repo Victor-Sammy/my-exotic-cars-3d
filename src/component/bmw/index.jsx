@@ -7,9 +7,8 @@ import {
 } from '@react-three/drei'
 import { angleToRadians } from '../../utils/angle'
 import { useFrame, useThree } from '@react-three/fiber'
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import * as THREE from 'three'
-import gsap from 'gsap'
 import { Bmw } from './Bmw'
 
 export default function BmwComp({
@@ -23,15 +22,6 @@ export default function BmwComp({
   const OrbitControlsRef = useRef(null)
 
   useFrame(() => {
-    // Limit zooming after reaching maxScroll
-    // if (bmwTotalScroll > maxScroll) {
-    //   OrbitControlsRef.current.enableZoom = false
-    // } else {
-    //   OrbitControlsRef.current.enableZoom = true
-    // }
-
-    // OrbitControlsRef.current.update()
-
     // Enable or disable zoom based on the totalScroll range
     OrbitControlsRef.current.enableZoom = !(
       bmwTotalScroll <= negativeMaxScroll || bmwTotalScroll >= maxScroll
@@ -49,45 +39,12 @@ export default function BmwComp({
   useFrame((state) => {
     if (OrbitControlsRef.current) {
       const { x, y } = state.pointer
-      //console.log(-x * angleToRadians(90))
-      //console.log(y * angleToRadians(90 - 30))
+
       OrbitControlsRef.current.setAzimuthalAngle(-x * angleToRadians(45))
       OrbitControlsRef.current.setPolarAngle((y + 1) * angleToRadians(90 - 30))
       OrbitControlsRef.current.update()
     }
   })
-
-  // Animation
-  const ballRef = useRef(null)
-  useEffect(() => {
-    if (ballRef.current) {
-      console.log(ballRef.current)
-
-      const timeline = gsap.timeline({ paused: true })
-      // x-axis motion
-      timeline.to(ballRef.current.position, {
-        x: 1,
-        duration: 2,
-        ease: 'power2.out',
-      })
-
-      //y axis motion
-      timeline.to(
-        ballRef.current.position,
-        {
-          y: 0.5,
-          duration: 1.5,
-          ease: 'bounce(0.5)',
-        },
-        '<'
-      )
-
-      //play
-      timeline.play()
-    }
-  }, [ballRef.current])
-
-  console.log(bmwTotalScroll)
 
   return (
     <>

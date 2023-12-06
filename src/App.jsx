@@ -18,9 +18,6 @@ function App() {
   const negativeMaxScroll = -65 // Negative maxScroll for zooming in
 
   const handlePScroll = (event) => {
-    // setPorscheTotalScroll(
-    //   (prevTotalScroll) => prevTotalScroll + Math.abs(event.deltaY)
-    // )
     const newTotalScroll = porscheTotalScroll + event.deltaY
 
     // Limit totalScroll within the specified range
@@ -34,9 +31,6 @@ function App() {
   }
 
   const handleBzScroll = (event) => {
-    // setBenzTotalScroll(
-    //   (prevTotalScroll) => prevTotalScroll + Math.abs(event.deltaY)
-    // )
     const newTotalScroll = benzTotalScroll + event.deltaY
 
     // Limit totalScroll within the specified range
@@ -50,9 +44,6 @@ function App() {
   }
 
   const handleBmwScroll = (event) => {
-    // setBmwTotalScroll(
-    //   (prevTotalScroll) => prevTotalScroll + Math.abs(event.deltaY)
-    // )
     const newTotalScroll = bmwTotalScroll + event.deltaY
 
     // Limit totalScroll within the specified range
