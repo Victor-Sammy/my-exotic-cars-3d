@@ -1,3 +1,3 @@
-import ContentComponent from './contentComponent'
+import ContentComponent from './ContentComponent'
 
 export { ContentComponent }
