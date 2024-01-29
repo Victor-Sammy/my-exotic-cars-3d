@@ -108,13 +108,13 @@ function App() {
         </div>
         <div style={{ transform: 'translateY(-30px)' }}>
           <ContentComponent
-            content='The Porsche 718 is a series of one- or two-seat sports-racing cars built by Porsche from 1957 to 1962. An open-wheel single-seat model was developed for Formula racing...'
-            Category='Sportscar, F1, F2'
+            content="The Porsche 964 is a model of the Porsche 911 sports car manufactured and sold between 1989 and 1994. It was the first car to be offered with Porsche's Tiptronic automatic transmission and all wheel drive as options."
+            Category='Sportscar'
             Constructor='Porsche'
-            Designer='Wilhelm Hild'
-            Predecessor='Porsche 550'
-            Engine='Type 547 1,498 cc (91.4 cu in) DOHC F4 boxer engine normally aspirated Mid-engined'
-            Transmission='5-speed manual'
+            Designer='Benjamin Dimson'
+            Predecessor='Porsche 911'
+            Engine='3.6 L M64/50 turbo H6'
+            Transmission='5-speed Getrag G50 manual'
             Weight='570 kg (1,256.6 lb)'
             Fuel='Petrol'
             customStyles={{

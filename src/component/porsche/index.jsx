@@ -7,10 +7,10 @@ import {
 } from '@react-three/drei'
 import { angleToRadians } from '../../utils/angle'
 import { useFrame, useThree } from '@react-three/fiber'
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import * as THREE from 'three'
-import { Car } from './car'
 import { Showroom } from '../showroom.jsx/Showroom'
+import { Car } from './porsche'
 
 export default function Porsche({
   porscheTotalScroll,
@@ -21,12 +21,18 @@ export default function Porsche({
   const { size } = useThree()
 
   const OrbitControlsRef = useRef(null)
+  const [rotationY, setRotationY] = useState(0)
 
   useFrame(() => {
     // Enable or disable zoom based on the totalScroll range
     OrbitControlsRef.current.enableZoom = !(
       porscheTotalScroll <= negativeMaxScroll || porscheTotalScroll >= maxScroll
     )
+  })
+
+  // Update rotation on each frame
+  useFrame(() => {
+    setRotationY((prevRotationY) => prevRotationY + angleToRadians(1)) // Increment rotation angle
   })
 
   // Calculate scale based on the size of the viewport
@@ -41,7 +47,7 @@ export default function Porsche({
     if (OrbitControlsRef.current) {
       const { x, y } = state.pointer
 
-      OrbitControlsRef.current.setAzimuthalAngle(-x * angleToRadians(45))
+      OrbitControlsRef.current.setAzimuthalAngle(-x * angleToRadians(60))
       OrbitControlsRef.current.setPolarAngle((y + 1) * angleToRadians(90 - 30))
       OrbitControlsRef.current.update()
     }
@@ -58,24 +64,24 @@ export default function Porsche({
         maxPolarAngle={angleToRadians(80)}
       />
 
-      {/* Car */}
+      {/* Car showroom */}
       <Showroom />
 
       {/* Car */}
-      <Car />
+      <Car rotationY={rotationY} />
 
       {/* Floor*/}
       <mesh rotation={[-angleToRadians(90), 0, 0]} receiveShadow ref={meshRef}>
         <planeGeometry args={[20, 20]} />
-        <meshStandardMaterial color='#1ea3d8' />
+        <meshStandardMaterial color='#000C66' />
       </mesh>
       {/* Ambient light */}
-      <ambientLight args={['#ffffff', 0.7]} />
+      <ambientLight args={['#000', 0.7]} />
 
       {/* Directional light */}
       <spotLight
-        args={['#ffffff', 7, 9, angleToRadians(50), 0.1]}
-        position={[-2, 1, 1]}
+        args={['#ffffff', 7, 9, angleToRadians(45), 0.1]}
+        position={[-5, 1, 1]}
         castShadow
         ref={meshRef}
       />

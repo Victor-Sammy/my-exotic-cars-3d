@@ -7,7 +7,7 @@ import {
 } from '@react-three/drei'
 import { angleToRadians } from '../../utils/angle'
 import { useFrame, useThree } from '@react-three/fiber'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import * as THREE from 'three'
 import { Benz } from './Benz'
 import { Showroom2 } from '../showroom2/Showroom2'
@@ -21,12 +21,18 @@ export default function BenzComp({
   const { size } = useThree()
 
   const OrbitControlsRef = useRef(null)
+  const [rotationY, setRotationY] = useState(0)
 
   useFrame(() => {
     // Enable or disable zoom based on the totalScroll range
     OrbitControlsRef.current.enableZoom = !(
       benzTotalScroll <= negativeMaxScroll || benzTotalScroll >= maxScroll
     )
+  })
+
+  // Update rotation on each frame
+  useFrame(() => {
+    setRotationY((prevRotationY) => prevRotationY + angleToRadians(1)) // Increment rotation angle
   })
 
   // Calculate scale based on the size of the viewport
@@ -59,7 +65,7 @@ export default function BenzComp({
       <Showroom2 />
 
       {/* Car */}
-      <Benz OrbitControlsRef={OrbitControlsRef} />
+      <Benz OrbitControlsRef={OrbitControlsRef} rotationY={rotationY} />
 
       {/* Floor*/}
       <mesh rotation={[-angleToRadians(90), 0, 0]} receiveShadow ref={meshRef}>

@@ -7,7 +7,7 @@ import {
 } from '@react-three/drei'
 import { angleToRadians } from '../../utils/angle'
 import { useFrame, useThree } from '@react-three/fiber'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import * as THREE from 'three'
 import { Bmw } from './Bmw'
 
@@ -20,12 +20,18 @@ export default function BmwComp({
   const { size } = useThree()
 
   const OrbitControlsRef = useRef(null)
+  const [rotationY, setRotationY] = useState(0)
 
   useFrame(() => {
     // Enable or disable zoom based on the totalScroll range
     OrbitControlsRef.current.enableZoom = !(
       bmwTotalScroll <= negativeMaxScroll || bmwTotalScroll >= maxScroll
     )
+  })
+
+  // Update rotation on each frame
+  useFrame(() => {
+    setRotationY((prevRotationY) => prevRotationY + angleToRadians(1)) // Increment rotation angle
   })
 
   // Calculate scale based on the size of the viewport
@@ -48,7 +54,7 @@ export default function BmwComp({
 
   return (
     <>
-      <PerspectiveCamera makeDefault position={[0, 0, 5]} />
+      <PerspectiveCamera makeDefault position={[0, -3, 5]} />
       <OrbitControls
         ref={OrbitControlsRef}
         minPolarAngle={angleToRadians(60)}
@@ -56,7 +62,7 @@ export default function BmwComp({
       />
 
       {/* Car */}
-      <Bmw />
+      <Bmw rotationY={rotationY} />
 
       {/* Floor*/}
       <mesh rotation={[-angleToRadians(90), 0, 0]} receiveShadow ref={meshRef}>
